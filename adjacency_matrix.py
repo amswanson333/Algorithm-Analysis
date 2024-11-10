@@ -52,6 +52,7 @@ class AdjacencyMatrix:
         
         else:
             self.adjacency_matrix[start-1][end-1] = weight
+        # todo: add print statement to confirm change
             
     def edit_weight(self, start, end, weight: int):
         
@@ -72,6 +73,7 @@ class AdjacencyMatrix:
             raise ValueError("Weight cannot be zero. Use the delete_edge() method to delete the edge.")
         
         self.adjacency_matrix[start-1][end-1] = weight
+        # todo: add print statement to confirm change
     
     def delete_edge(self, start, end):
         
@@ -86,6 +88,7 @@ class AdjacencyMatrix:
             raise ValueError("Edge does not exist.")
         
         self.adjacency_matrix[start-1][end-1] = 0
+        # todo: add print statement to confirm change
 
     def add_vertex(self, vertex):
         
@@ -102,10 +105,11 @@ class AdjacencyMatrix:
         self.vertices.append(vertex)
         
         # add a new row and column for the new vertex
-        for l in self.adjacency_matrix:
+        for l in self.adjacency_matrix:  # noqa: E741
             l.append(0)
         row = [0 for _ in range(len(self.vertices))]
         self.adjacency_matrix.append(row)
+        # todo: add print statement to confirm change
         
     def print_matrix(self):
         for row in self.adjacency_matrix:

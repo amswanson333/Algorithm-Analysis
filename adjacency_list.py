@@ -43,20 +43,86 @@ class AdjacencyList:
         return str(self.adjacency_list)
     
     def add_edge(self, start, end, weight: int = 1):
-        # todo
-        pass
-    
+        
+        # check if start and stop exist
+        if start not in self.vertices:
+            raise IndexError("Start vertex does not exist.")
+        if end not in self.vertices:
+            raise IndexError("End vertex does not exist.")
+        
+        # check if an edge already exists
+        for t in self.adjacency_list[start]:
+            if t[0] == end:
+                raise ValueError("Edge already exists, use edit_weight() to change the edge weight.")
+        
+        # check that weight is a valid value
+        if weight < 0:
+            raise ValueError("Weight cannot be negative.")
+        elif weight == 0:
+            raise ValueError("Weight cannot be zero. Use the delete_edge() method to delete the edge.")
+        
+        # add the edge to the appropriate start vertex
+        self.adjacency_list[start] = self.adjacency_list[start] + [(end, weight)]
+        # todo: add print output to confirm addition
+            
     def edit_weight(self, start, end, weight: int):
-        # todo
-        pass
+        
+        # check if start and stop exist
+        if start not in self.vertices:
+            raise IndexError("Start vertex does not exist.")
+        if end not in self.vertices:
+            raise IndexError("End vertex does not exist.")
+        
+        # check if an edge exists
+        for i,t in enumerate(self.adjacency_list[start]):
+            if t[0] == end:
+                # save the index of the tuple for later
+                edge_index = i
+                break
+            if i == len(self.adjacency_list[start]) - 1:
+                raise ValueError("Edge does not exist. Use the add_edge() method to add an edge with a specific weight.")
+        
+        # check that weight is a valid value
+        if weight < 0:
+            raise ValueError("Weight cannot be negative.")
+        elif weight == 0:
+            raise ValueError("Weight cannot be zero. Use the delete_edge() method to delete the edge.")
+
+        self.adjacency_list[start][edge_index] = (end,weight)
+        # todo: add print output to confirm change
     
     def delete_edge(self, start, end):
-        # todo
-        pass
+        
+        # check if start and stop exist
+        if start not in self.vertices:
+            raise IndexError("Start vertex does not exist.")
+        if end not in self.vertices:
+            raise IndexError("End vertex does not exist.")
+        
+        # check if an edge exists
+        for i,t in enumerate(self.adjacency_list[start]):
+            if t[0] == end:
+                # save the index of the tuple for later
+                edge_index = i
+                break
+            if i == len(self.adjacency_list[start]) - 1:
+                raise ValueError("Edge does not exist. Nothing to delete.")
+            
+        self.adjacency_list[start].pop(edge_index)
+        # todo: add print output to confirm change
     
     def add_vertex(self, vertex):
-        #todo
-        pass
+
+        # check vertex parameter
+        if vertex in self.vertices:
+            raise ValueError("Vertex already exists.")
+        if type(vertex) is not int:
+            raise ValueError("Vertex must be an integer.")
+        if vertex != self.vertices[-1] + 1:
+            print(f"Previous Vertex is {self.vertices[-1]}. Use {self.vertices[-1] + 1} instead.")
+            raise ValueError("Vertex numbers must be consecutive.")
+        
+        self.adjacency_list[vertex] = []
     
     def print_list(self):
         print("Start \t -> \t (End, Weight)")
